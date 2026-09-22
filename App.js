@@ -1,20 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import Login from './src/screens/login';
+import Cadastro_User from './src/screens/cadastro_user';
+import Home from './src/screens/home';
 
 export default function App() {
+  const [screen, setScreen] = useState('login');
+
+  if (screen === 'cadastro') {
+    return <Cadastro_User onBackToLogin={() => setScreen('login')} />;
+  }
+
+  if (screen === 'home') {
+    return <Home onLogout={() => setScreen('login')} />;
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Login
+      onGoToCadastro={() => setScreen('cadastro')}
+      onLoginSuccess={() => setScreen('home')}
+    />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
